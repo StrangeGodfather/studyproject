@@ -1,0 +1,459 @@
+<?xml version="1.0"?>
+<Config ASDisableNagle="false" IISDisableNagle="false" 
+        IgnoreDNSFailures="false" RefreshInterval="86400" 
+        ResponseChunkSize="64" AcceptAllContent="false" 
+        IISPluginPriority="High"  FIPSEnable="false" 
+        AppServerPortPreference="HostHeader" VHostMatchingCompat="false" 
+        ChunkedResponse="false">
+    <Log LogLevel="Error" Name="C:\IBM\WebSphere\Plugins/logs/webserver1/http_plugin.log"/>
+    <Property Name="ESIEnable" Value="true"/>
+    <Property Name="ESIMaxCacheSize" Value="1024"/>
+    <Property Name="ESIInvalidationMonitor" Value="false"/>
+    <Property Name="PluginInstallRoot"  Value="C:\IBM\WebSphere\Plugins"/>
+    <VirtualHostGroup Name="default_host">
+      <VirtualHost Name="*:9081"/>
+	  <VirtualHost Name="*:9082"/>
+      <VirtualHost Name="*:80"/>
+      <VirtualHost Name="*:9444"/>
+	  <VirtualHost Name="*:9446"/>
+      <VirtualHost Name="*:9080"/>
+      <VirtualHost Name="*:9083"/>
+	  <VirtualHost Name="*:9086"/>
+	  <VirtualHost Name="*:8443"/>
+    </VirtualHostGroup>
+      <ServerCluster CloneSeparatorChange="false" GetDWLMTable="false" IgnoreAffinityRequests="true" LoadBalance="Round Robin" Name="server1_GDB30EENode01_Cluster" PostBufferSize="0" PostSizeLimit="-1" RemoveSpecialHeaders="true" RetryInterval="60" ServerIOTimeoutRetry="-1">
+      <Server ConnectTimeout="0" ExtendedHandshake="false" MaxConnections="-1" Name="GDB30EENode01_server1" ServerIOTimeout="900" WaitForContinue="false">
+         <Transport Hostname="GDB30EE" Port="9080" Protocol="http"/>
+         <Transport Hostname="GDB30EE" Port="9443" Protocol="https">
+            <Property Name="stashfile" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.sth"/>
+         </Transport>
+      </Server>
+   </ServerCluster>
+   <UriGroup Name="default_host_server1_GDB30EENode01_Cluster_URIs">
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/GDBPROD/birt/*"/>
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/GDBPROD/EximBillSSWeb/*"/>
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/GDBPROD/EximBillWeb/*"/>
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/GDBPROD/ESP/*"/>
+   </UriGroup>
+   <Route ServerCluster="server1_GDB30EENode01_Cluster" UriGroup="default_host_server1_GDB30EENode01_Cluster_URIs" VirtualHostGroup="default_host"/>
+   <ServerCluster CloneSeparatorChange="false" GetDWLMTable="false" IgnoreAffinityRequests="true" LoadBalance="Round Robin" Name="server1_iscdemoNode01_Cluster" PostBufferSize="64" PostSizeLimit="-1" RemoveSpecialHeaders="true" RetryInterval="60">
+      <Server ConnectTimeout="0" ExtendedHandshake="false" MaxConnections="-1" Name="iscdemoNode01_server1" ServerIOTimeout="0" WaitForContinue="false">
+         <Transport Hostname="iscdemo" Port="9080" Protocol="http"/>
+         <Transport Hostname="iscdemo" Port="9443" Protocol="https">
+            <Property Name="keyring" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.kdb"/>
+            <Property Name="stashfile" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.sth"/>
+         </Transport>
+      </Server>
+   </ServerCluster>
+   <UriGroup Name="default_host_server1_iscdemoNode01_Cluster_URIs">
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/RVCE/CEWeb/*"/>
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/RVCE/CESWeb/*"/>
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/RVEE/EximBillSSWeb/*"/>
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/RVEE/EximBillWeb/*"/>
+	  <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/RVEE/birt/*"/>
+   </UriGroup>
+   <Route ServerCluster="server1_iscdemoNode01_Cluster" UriGroup="default_host_server1_iscdemoNode01_Cluster_URIs" VirtualHostGroup="default_host"/>
+   <ServerCluster CloneSeparatorChange="false" LoadBalance="Round Robin" Name="server1_Dev3svr04Node01_Cluster" PostBufferSize="64" PostSizeLimit="-1" RemoveSpecialHeaders="true" RetryInterval="60">
+      <Server ConnectTimeout="0" ExtendedHandshake="false" MaxConnections="-1" Name="Dev3svr04Node01_server1" ServerIOTimeout="0" WaitForContinue="false">
+         <Transport Hostname="Dev3svr04" Port="9080" Protocol="http"/>
+         <Transport Hostname="Dev3svr04" Port="9443" Protocol="https">
+            <Property Name="keyring" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.kdb"/>
+            <Property Name="stashfile" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.sth"/>
+         </Transport>
+         <Transport Hostname="Dev3svr04" Port="9088" Protocol="http"/>
+      </Server>
+   </ServerCluster>
+   <UriGroup Name="default_host_server1_Dev3svr04Node01_Cluster_URIs">
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/SCF/EximBillSSWeb/*"/>
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/SCF/EximBillWeb/*"/>
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/SCF/birt/*"/>
+   </UriGroup>
+   <Route ServerCluster="server1_Dev3svr04Node01_Cluster" UriGroup="default_host_server1_Dev3svr04Node01_Cluster_URIs" VirtualHostGroup="default_host"/>
+   <ServerCluster CloneSeparatorChange="false" LoadBalance="Round Robin" Name="server1_Dev3svr06Node01_Cluster" PostSizeLimit="-1" RemoveSpecialHeaders="true" RetryInterval="60">
+      <Server ConnectTimeout="0" ExtendedHandshake="false" MaxConnections="-1" Name="Dev3svr06Node01_server1" WaitForContinue="false">
+         <Transport Hostname="Dev3svr06" Port="9080" Protocol="http"/>
+         <Transport Hostname="Dev3svr06" Port="9443" Protocol="https">
+            <Property Name="keyring" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.kdb"/>
+            <Property Name="stashfile" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.sth"/>
+         </Transport>
+         <Transport Hostname="Dev3svr06" Port="9088" Protocol="http"/>
+      </Server>
+   </ServerCluster>
+   <UriGroup Name="default_host_server1_Dev3svr06Node01_Cluster_URIs">
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/SCF/CEWeb/*"/>
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/SCF/CEWebservlet/*"/>
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/SCF/CESWeb/*"/>
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/SCF/CESWebservlet/*"/>
+   </UriGroup>
+   <Route ServerCluster="server1_Dev3svr06Node01_Cluster" UriGroup="default_host_server1_Dev3svr06Node01_Cluster_URIs" VirtualHostGroup="default_host"/>
+   <ServerCluster CloneSeparatorChange="false" GetDWLMTable="false" IgnoreAffinityRequests="true" LoadBalance="Round Robin" Name="server1_ceteam04Node07_Cluster" PostBufferSize="64" PostSizeLimit="-1" RemoveSpecialHeaders="true" RetryInterval="60">
+      <Server ConnectTimeout="0" ExtendedHandshake="false" MaxConnections="-1" Name="ceteam04Node07_server1" ServerIOTimeout="0" WaitForContinue="false">
+         <Transport Hostname="ceteam04" Port="9086" Protocol="http"/>
+         <Transport Hostname="ceteam04" Port="9449" Protocol="https">
+            <Property Name="keyring" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.kdb"/>
+            <Property Name="stashfile" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.sth"/>
+         </Transport>
+      </Server>
+   </ServerCluster>
+   <UriGroup Name="default_host_server1_ceteam04Node07_Cluster_URIs">
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/BIRTWEB/*"/>
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/CEWebV281/*"/>
+   </UriGroup>
+   <Route ServerCluster="server1_ceteam04Node07_Cluster" UriGroup="default_host_server1_ceteam04Node07_Cluster_URIs" VirtualHostGroup="default_host"/>   
+   <ServerCluster CloneSeparatorChange="false" GetDWLMTable="false" IgnoreAffinityRequests="true" LoadBalance="Round Robin" Name="server1_baselin02Node01_Cluster" PostBufferSize="64" PostSizeLimit="-1" RemoveSpecialHeaders="true" RetryInterval="60">
+      <Server ConnectTimeout="0" ExtendedHandshake="false" MaxConnections="-1" Name="baselin02Node01_server1" ServerIOTimeout="0" WaitForContinue="false">
+         <Transport Hostname="baselin02" Port="9080" Protocol="http"/>
+         <Transport Hostname="baselin02" Port="9443" Protocol="https">
+            <Property Name="keyring" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.kdb"/>
+            <Property Name="stashfile" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.sth"/>
+         </Transport>
+      </Server>
+   </ServerCluster>
+   <UriGroup Name="default_host_server1_baselin02Node01_Cluster_URIs">
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/GDB/EximBillSSWeb/*"/>
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/GDB/EximBillWeb/*"/>
+   </UriGroup>
+   <Route ServerCluster="server1_baselin02Node01_Cluster" UriGroup="default_host_server1_baselin02Node01_Cluster_URIs" VirtualHostGroup="default_host"/>
+   <ServerCluster CloneSeparatorChange="false" GetDWLMTable="false" IgnoreAffinityRequests="true" LoadBalance="Round Robin" Name="server1_SabdvikNode01_Cluster" PostBufferSize="64" PostSizeLimit="-1" RemoveSpecialHeaders="true" RetryInterval="60">
+      <Server ConnectTimeout="0" ExtendedHandshake="false" MaxConnections="-1" Name="SabdvikNode01_server1" ServerIOTimeout="0" WaitForContinue="false">
+         <Transport Hostname="Sabdvik" Port="9080" Protocol="http"/>
+         <Transport Hostname="Sabdvik" Port="9443" Protocol="https">
+            <Property Name="keyring" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.kdb"/>
+            <Property Name="stashfile" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.sth"/>
+         </Transport>
+      </Server>
+   </ServerCluster>
+   <UriGroup Name="default_host_server1_SabdvikNode01_Cluster_URIs">
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/SANDVIKDEMO/EximBillSSWeb/*"/>
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/SANDVIKDEMO/EximBillWeb/*"/>
+   </UriGroup>
+   <Route ServerCluster="server1_SabdvikNode01_Cluster" UriGroup="default_host_server1_SabdvikNode01_Cluster_URIs" VirtualHostGroup="default_host"/>
+   <!--
+   <ServerCluster CloneSeparatorChange="false" GetDWLMTable="false" IgnoreAffinityRequests="true" LoadBalance="Round Robin" Name="server1_SMBCDemoNode02_Cluster" PostBufferSize="64" PostSizeLimit="-1" RemoveSpecialHeaders="true" RetryInterval="60">
+      <Server ConnectTimeout="0" ExtendedHandshake="false" MaxConnections="-1" Name="SMBCDemoNode02_server1" ServerIOTimeout="0" WaitForContinue="false">
+         <Transport Hostname="SMBCDemo" Port="9081" Protocol="http"/>
+         <Transport Hostname="SMBCDemo" Port="9444" Protocol="https">
+            <Property Name="keyring" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.kdb"/>
+            <Property Name="stashfile" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.sth"/>
+         </Transport>
+      </Server>
+   </ServerCluster>
+   <UriGroup Name="default_host_server1_SMBCDemoNode02_Cluster_URIs">
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/EEDEMO/EximBillSSWeb/*"/>
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/EEDEMO/EximBillWeb/*"/>
+   </UriGroup>
+   <Route ServerCluster="server1_SMBCDemoNode02_Cluster" UriGroup="default_host_server1_SMBCDemoNode02_Cluster_URIs" VirtualHostGroup="default_host"/>
+   -->
+   <ServerCluster CloneSeparatorChange="false" GetDWLMTable="false" IgnoreAffinityRequests="true" LoadBalance="Round Robin" Name="server1_CSMEDEMONode02_Cluster" PostBufferSize="64" PostSizeLimit="-1" RemoveSpecialHeaders="true" RetryInterval="60">
+      <Server ConnectTimeout="0" ExtendedHandshake="false" MaxConnections="-1" Name="CSMEDEMONode02_server1" ServerIOTimeout="0" WaitForContinue="false">
+         <Transport Hostname="CSMEDEMO" Port="9081" Protocol="http"/>
+         <Transport Hostname="CSMEDEMO" Port="9444" Protocol="https">
+            <Property Name="keyring" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.kdb"/>
+            <Property Name="stashfile" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.sth"/>
+         </Transport>
+      </Server>
+   </ServerCluster>
+   <UriGroup Name="default_host_server1_CSMEDEMONode02_Cluster_URIs">
+      <!--
+	  <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/birt/*"/>
+	  -->
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/SBSCF/EximBillSSWeb/*"/>
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/SBSCF/EximBillWeb/*"/>
+   </UriGroup>
+   <Route ServerCluster="server1_CSMEDEMONode02_Cluster" UriGroup="default_host_server1_CSMEDEMONode02_Cluster_URIs" VirtualHostGroup="default_host"/>
+   <ServerCluster CloneSeparatorChange="false" IgnoreAffinityRequests="true" LoadBalance="Round Robin" Name="server1_tsucorpNode02_Cluster" PostBufferSize="64" PostSizeLimit="-1" RemoveSpecialHeaders="true" RetryInterval="60">
+      <Server ConnectTimeout="0" ExtendedHandshake="false" MaxConnections="-1" Name="tsucorpNode02_server1" ServerIOTimeout="0" WaitForContinue="false">
+         <Transport Hostname="tsucorp" Port="9081" Protocol="http"/>
+         <Transport Hostname="tsucorp" Port="9444" Protocol="https">
+            <Property Name="keyring" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.kdb"/>
+            <Property Name="stashfile" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.sth"/>
+         </Transport>
+      </Server>
+   </ServerCluster>
+   <UriGroup Name="default_host_server1_tsucorpNode02_Cluster_URIs">
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/COE/EximBillWeb/*"/>
+   </UriGroup>
+   <Route ServerCluster="server1_tsucorpNode02_Cluster" UriGroup="default_host_server1_tsucorpNode02_Cluster_URIs" VirtualHostGroup="default_host"/>
+   <ServerCluster CloneSeparatorChange="false" GetDWLMTable="false" IgnoreAffinityRequests="true" LoadBalance="Round Robin" Name="server1_SMBCDemoNode02_Cluster" PostBufferSize="64" PostSizeLimit="-1" RemoveSpecialHeaders="true" RetryInterval="60">
+      <Server ConnectTimeout="0" ExtendedHandshake="false" MaxConnections="-1" Name="SMBCDemoNode02_server1" ServerIOTimeout="0" WaitForContinue="false">
+         <Transport Hostname="CoEDev" Port="9081" Protocol="http"/>
+         <Transport Hostname="CoEDev" Port="9444" Protocol="https">
+            <Property Name="keyring" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.kdb"/>
+            <Property Name="stashfile" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.sth"/>
+         </Transport>
+      </Server>
+   </ServerCluster>
+   <UriGroup Name="default_host_server1_SMBCDemoNode02_Cluster_URIs">
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/BaselineCoE/birt/*"/>
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/BaselineCoE/EximBillSSWeb/*"/>
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/BaselineCoE/EximBillWeb/*"/>
+   </UriGroup>
+   <Route ServerCluster="server1_SMBCDemoNode02_Cluster" UriGroup="default_host_server1_SMBCDemoNode02_Cluster_URIs" VirtualHostGroup="default_host"/>
+   <ServerCluster CloneSeparatorChange="false" GetDWLMTable="false" IgnoreAffinityRequests="true" LoadBalance="Round Robin" Name="server1_VTBCENode02_Cluster" PostBufferSize="0" PostSizeLimit="-1" RemoveSpecialHeaders="true" RetryInterval="60" ServerIOTimeoutRetry="-1">
+      <Server ConnectTimeout="0" ExtendedHandshake="false" MaxConnections="-1" Name="VTBCENode02_server1" ServerIOTimeout="900" WaitForContinue="false">
+         <Transport Hostname="VTBCE" Port="9081" Protocol="http"/>
+         <Transport Hostname="VTBCE" Port="9444" Protocol="https">
+            <Property Name="keyring" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.kdb"/>
+            <Property Name="stashfile" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.sth"/>
+         </Transport>
+      </Server>
+   </ServerCluster>
+   <UriGroup Name="default_host_server1_VTBCENode02_Cluster_URIs">
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/VTBCE/*"/>
+   </UriGroup>
+   <Route ServerCluster="server1_VTBCENode02_Cluster" UriGroup="default_host_server1_VTBCENode02_Cluster_URIs" VirtualHostGroup="default_host"/>
+   <ServerCluster CloneSeparatorChange="false" GetDWLMTable="false" IgnoreAffinityRequests="true" LoadBalance="Round Robin" Name="server1_VTBWin7Node01_Cluster" PostBufferSize="0" PostSizeLimit="-1" RemoveSpecialHeaders="true" RetryInterval="60" ServerIOTimeoutRetry="-1">
+      <Server ConnectTimeout="0" ExtendedHandshake="false" MaxConnections="-1" Name="VTBWin7Node01_server1" ServerIOTimeout="900" WaitForContinue="false">
+         <Transport Hostname="VTBWin7" Port="9080" Protocol="http"/>
+         <Transport Hostname="VTBWin7" Port="9443" Protocol="https">
+            <Property Name="keyring" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.kdb"/>
+            <Property Name="stashfile" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.sth"/>
+         </Transport>
+      </Server>
+   </ServerCluster>
+   <UriGroup Name="default_host_server1_VTBWin7Node01_Cluster_URIs">
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/VTBEE/birt/*"/>
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/VTBEE/EximBillSSWeb/*"/>
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/VTBEE/EximBillWeb/*"/>
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/VTBEE/RMIWebservice/*"/>
+   </UriGroup>
+   <Route ServerCluster="server1_VTBWin7Node01_Cluster" UriGroup="default_host_server1_VTBWin7Node01_Cluster_URIs" VirtualHostGroup="default_host"/>
+   <ServerCluster CloneSeparatorChange="false" GetDWLMTable="false" IgnoreAffinityRequests="true" LoadBalance="Round Robin" Name="server1_STBCENode01_Cluster" PostBufferSize="0" PostSizeLimit="-1" RemoveSpecialHeaders="true" RetryInterval="60" ServerIOTimeoutRetry="-1">
+      <Server ConnectTimeout="0" ExtendedHandshake="false" MaxConnections="-1" Name="STBCENode01_server1" ServerIOTimeout="900" WaitForContinue="false">
+         <Transport Hostname="STBCE" Port="9080" Protocol="http"/>
+         <Transport Hostname="STBCE" Port="9443" Protocol="https">
+            <Property Name="keyring" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.kdb"/>
+            <Property Name="stashfile" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.sth"/>
+         </Transport>
+      </Server>
+   </ServerCluster>
+   <UriGroup Name="default_host_server1_STBCENode01_Cluster_URIs">
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/SCFWeb/*"/>
+   </UriGroup>
+   <Route ServerCluster="server1_STBCENode01_Cluster" UriGroup="default_host_server1_STBCENode01_Cluster_URIs" VirtualHostGroup="default_host"/>
+
+   <ServerCluster CloneSeparatorChange="false" GetDWLMTable="false" IgnoreAffinityRequests="true" LoadBalance="Round Robin" Name="server1_MichelleNode01_Cluster" PostBufferSize="64" PostSizeLimit="-1" RemoveSpecialHeaders="true" RetryInterval="60">
+      <Server ConnectTimeout="0" ExtendedHandshake="false" MaxConnections="-1" Name="MichelleNode01_server1" ServerIOTimeout="0" WaitForContinue="false">
+         <Transport Hostname="Michelle" Port="9080" Protocol="http"/>
+         <Transport Hostname="Michelle" Port="9443" Protocol="https">
+            <Property Name="keyring" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.kdb"/>
+            <Property Name="stashfile" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.sth"/>
+         </Transport>
+      </Server>
+   </ServerCluster>
+   <UriGroup Name="default_host_server1_MichelleNode01_Cluster_URIs">
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/CMCEWeb/*"/>
+   </UriGroup>
+   <Route ServerCluster="server1_MichelleNode01_Cluster" UriGroup="default_host_server1_MichelleNode01_Cluster_URIs" VirtualHostGroup="default_host"/>
+  <ServerCluster CloneSeparatorChange="false" GetDWLMTable="false" IgnoreAffinityRequests="true" LoadBalance="Round Robin" Name="server1_tsueeNode02_Cluster" PostBufferSize="64" PostSizeLimit="-1" RemoveSpecialHeaders="true" RetryInterval="60">
+      <Server ConnectTimeout="0" ExtendedHandshake="false" MaxConnections="-1" Name="tsueeNode02_server1" ServerIOTimeout="0" WaitForContinue="false">
+         <Transport Hostname="tsuee" Port="9081" Protocol="http"/>
+         <Transport Hostname="tsuee" Port="9444" Protocol="https">
+            <Property Name="keyring" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.kdb"/>
+            <Property Name="stashfile" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.sth"/>
+         </Transport>
+      </Server>
+   </ServerCluster>
+   <UriGroup Name="default_host_server1_tsueeNode02_Cluster_URIs">
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/EximBillSSWeb/*"/>
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/EximBillWeb/*"/>
+	  <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/tsubirt/*"/>
+   </UriGroup>
+   <Route ServerCluster="server1_tsueeNode02_Cluster" UriGroup="default_host_server1_tsueeNode02_Cluster_URIs" VirtualHostGroup="default_host"/>
+   <ServerCluster CloneSeparatorChange="false" LoadBalance="Round Robin" Name="server1_TSUCEDEMONode02_Cluster" PostSizeLimit="-1" RemoveSpecialHeaders="true" RetryInterval="60">
+      <Server ConnectTimeout="0" ExtendedHandshake="false" MaxConnections="-1" Name="TSUCEDEMONode02_server1" WaitForContinue="false">
+         <Transport Hostname="TSUCEDEMO" Port="9081" Protocol="http"/>
+         <Transport Hostname="TSUCEDEMO" Port="9444" Protocol="https">
+            <Property Name="keyring" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.kdb"/>
+            <Property Name="stashfile" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.sth"/>
+         </Transport>         
+      </Server>
+   </ServerCluster>
+   <UriGroup Name="default_host_server1_TSUCEDEMONode02_Cluster_URIs">
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/CEWeb/*"/>
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/CEWebservlet/*"/>
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/CESWeb/*"/>
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/CESWebservlet/*"/>
+   </UriGroup>
+   <Route ServerCluster="server1_TSUCEDEMONode02_Cluster" UriGroup="default_host_server1_TSUCEDEMONode02_Cluster_URIs" VirtualHostGroup="default_host"/>
+   <ServerCluster CloneSeparatorChange="false" GetDWLMTable="false" IgnoreAffinityRequests="true" LoadBalance="Round Robin" Name="server1_MNLDemoNode01_Cluster" PostBufferSize="64" PostSizeLimit="-1" RemoveSpecialHeaders="true" RetryInterval="60">
+      <Server ConnectTimeout="0" ExtendedHandshake="false" MaxConnections="-1" Name="MNLDemoNode01_server1" ServerIOTimeout="0" WaitForContinue="false">
+         <Transport Hostname="MNLDemo" Port="9080" Protocol="http"/>
+         <Transport Hostname="MNLDemo" Port="9443" Protocol="https">
+            <Property Name="keyring" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.kdb"/>
+            <Property Name="stashfile" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.sth"/>
+         </Transport>
+      </Server>
+   </ServerCluster>
+   <UriGroup Name="default_host_server1_MNLDemoNode01_Cluster_URIs">
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/DEMO/birt/*"/>
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/DEMO/EximBillSSWeb/*"/>
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/DEMO/EximBillWeb/*"/>
+   </UriGroup>
+   <Route ServerCluster="server1_MNLDemoNode01_Cluster" UriGroup="default_host_server1_MNLDemoNode01_Cluster_URIs" VirtualHostGroup="default_host"/>
+   <ServerCluster CloneSeparatorChange="false" GetDWLMTable="false" IgnoreAffinityRequests="true" LoadBalance="Round Robin" Name="server1_CEVeracodeNode01_Cluster" PostBufferSize="0" PostSizeLimit="-1" RemoveSpecialHeaders="true" RetryInterval="60" ServerIOTimeoutRetry="-1">
+      <Server ConnectTimeout="0" ExtendedHandshake="false" MaxConnections="-1" Name="CEVeracodeNode01_server1" ServerIOTimeout="900" WaitForContinue="false">
+         <Transport Hostname="CEVeracode" Port="9080" Protocol="http"/>
+         <Transport Hostname="CEVeracode" Port="9443" Protocol="https">
+            <Property Name="keyring" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.kdb"/>
+            <Property Name="stashfile" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.sth"/>
+         </Transport>
+      </Server>
+   </ServerCluster>
+   <UriGroup Name="default_host_server1_CEVeracodeNode01_Cluster_URIs">
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/CEWebV30/*"/>
+   </UriGroup>
+   <Route ServerCluster="server1_CEVeracodeNode01_Cluster" UriGroup="default_host_server1_CEVeracodeNode01_Cluster_URIs" VirtualHostGroup="default_host"/>
+   <ServerCluster CloneSeparatorChange="false" GetDWLMTable="false" IgnoreAffinityRequests="true" LoadBalance="Round Robin" Name="server1_DemoBaselineNode01_Cluster" PostBufferSize="64" PostSizeLimit="-1" RemoveSpecialHeaders="true" RetryInterval="60">
+      <Server ConnectTimeout="0" ExtendedHandshake="false" MaxConnections="-1" Name="DemoBaselineNode01_server1" ServerIOTimeout="0" WaitForContinue="false">
+         <Transport Hostname="DemoBaseline" Port="9080" Protocol="http"/>
+         <Transport Hostname="DemoBaseline" Port="9443" Protocol="https">
+            <Property Name="keyring" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.kdb"/>
+            <Property Name="stashfile" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.sth"/>
+         </Transport>
+      </Server>
+   </ServerCluster>
+   <UriGroup Name="default_host_server1_DemoBaselineNode01_Cluster_URIs">
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/ARFEximBillSSWeb/*"/>
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/ARFEximBillWeb/*"/>
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/ESP/*"/>
+	  <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/ARFbirt/*"/>
+   </UriGroup>
+   <Route ServerCluster="server1_DemoBaselineNode01_Cluster" UriGroup="default_host_server1_DemoBaselineNode01_Cluster_URIs" VirtualHostGroup="default_host"/>
+   <ServerCluster CloneSeparatorChange="false" GetDWLMTable="false" IgnoreAffinityRequests="true" LoadBalance="Round Robin" Name="server1_DemoBaselineNode02_Cluster" PostBufferSize="64" PostSizeLimit="-1" RemoveSpecialHeaders="true" RetryInterval="60">
+      <Server ConnectTimeout="0" ExtendedHandshake="false" MaxConnections="-1" Name="DemoBaselineNode02_server1" ServerIOTimeout="0" WaitForContinue="false">
+         <Transport Hostname="DemoBaseline" Port="9081" Protocol="http"/>
+         <Transport Hostname="DemoBaseline" Port="9444" Protocol="https">
+            <Property Name="keyring" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.kdb"/>
+            <Property Name="stashfile" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.sth"/>
+         </Transport>
+      </Server>
+   </ServerCluster>
+   <UriGroup Name="default_host_server1_DemoBaselineNode02_Cluster_URIs">
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/ARFCEWeb/*"/>
+	  <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/ARFBIRTWEB/*"/>
+   </UriGroup>
+   <Route ServerCluster="server1_DemoBaselineNode02_Cluster" UriGroup="default_host_server1_DemoBaselineNode02_Cluster_URIs" VirtualHostGroup="default_host"/>
+   <ServerCluster CloneSeparatorChange="false" GetDWLMTable="false" IgnoreAffinityRequests="true" LoadBalance="Round Robin" Name="server1_TreasuryDevelopment_Cluster" PostBufferSize="64" PostSizeLimit="-1" RemoveSpecialHeaders="true" RetryInterval="60">
+      <Server ConnectTimeout="0" ExtendedHandshake="false" MaxConnections="-1" Name="TreasuryDevelopment_server1" ServerIOTimeout="0" WaitForContinue="false">
+         <Transport Hostname="TreasuryDevelopment" Port="9082" Protocol="http"/>
+         <Transport Hostname="TreasuryDevelopment" Port="9445" Protocol="https">
+            <Property Name="keyring" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.kdb"/>
+            <Property Name="stashfile" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.sth"/>
+         </Transport>
+      </Server>
+   </ServerCluster>
+   <UriGroup Name="default_host_TreasuryDevelopment_Cluster_URIs">
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/TreasuryEximBillWeb/*"/>
+   </UriGroup>
+   <Route ServerCluster="server1_TreasuryDevelopment_Cluster" UriGroup="default_host_TreasuryDevelopment_Cluster_URIs" VirtualHostGroup="default_host"/>
+   <ServerCluster CloneSeparatorChange="false" GetDWLMTable="false" IgnoreAffinityRequests="true" LoadBalance="Round Robin" Name="server1_bmprojectwasNode01_Cluster" PostBufferSize="0" PostSizeLimit="-1" RemoveSpecialHeaders="true" RetryInterval="60" ServerIOTimeoutRetry="-1">
+      <Server ConnectTimeout="0" ExtendedHandshake="false" MaxConnections="-1" Name="bmprojectwasNode01_server1" ServerIOTimeout="900" WaitForContinue="false">
+         <Transport Hostname="bmprojectwas" Port="9080" Protocol="http"/>
+         <Transport Hostname="bmprojectwas" Port="9443" Protocol="https">
+            <Property Name="keyring" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.kdb"/>
+            <Property Name="stashfile" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.sth"/>
+         </Transport>
+      </Server>
+   </ServerCluster>
+   <UriGroup Name="default_host_server1_bmprojectwasNode01_Cluster_URIs">
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/Dev3/EximBillWeb/*"/>
+   </UriGroup>
+   <Route ServerCluster="server1_bmprojectwasNode01_Cluster" UriGroup="default_host_server1_bmprojectwasNode01_Cluster_URIs" VirtualHostGroup="default_host"/>
+   <ServerCluster CloneSeparatorChange="false" GetDWLMTable="false" IgnoreAffinityRequests="true" LoadBalance="Round Robin" Name="server1_dev4-blockchainNode01_Cluster" PostBufferSize="64" PostSizeLimit="-1" RemoveSpecialHeaders="true" RetryInterval="60">
+      <Server ConnectTimeout="0" ExtendedHandshake="false" MaxConnections="-1" Name="dev4-blockchainNode01_server1" ServerIOTimeout="0" WaitForContinue="false">
+         <Transport Hostname="dev4-blockchain" Port="9082" Protocol="http"/>
+         <!--
+		 <Transport Hostname="dev4-blockchain" Port="9443" Protocol="https">
+            <Property Name="keyring" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.kdb"/>
+            <Property Name="stashfile" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.sth"/>
+         </Transport>
+		 -->
+      </Server>
+   </ServerCluster>
+   <UriGroup Name="default_host_server1_dev4-blockchainNode01_Cluster_URIs">
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/HYPEximBillWeb/*"/>
+   </UriGroup>
+   <Route ServerCluster="server1_dev4-blockchainNode01_Cluster" UriGroup="default_host_server1_dev4-blockchainNode01_Cluster_URIs" VirtualHostGroup="default_host"/>
+   <ServerCluster CloneSeparatorChange="false" GetDWLMTable="false" IgnoreAffinityRequests="true" LoadBalance="Round Robin" Name="server1_dev4-blockchainNode02_Cluster" PostBufferSize="64" PostSizeLimit="-1" RemoveSpecialHeaders="true" RetryInterval="60">
+      <Server ConnectTimeout="0" ExtendedHandshake="false" MaxConnections="-1" Name="dev4-blockchainNode02_server1" ServerIOTimeout="0" WaitForContinue="false">
+         <Transport Hostname="dev4-blockchain" Port="9081" Protocol="http"/>
+		 <!--
+         <Transport Hostname="dev4-blockchain" Port="9444" Protocol="https">
+            <Property Name="keyring" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.kdb"/>
+            <Property Name="stashfile" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.sth"/>
+         </Transport>
+		 -->
+      </Server>
+   </ServerCluster>
+   <UriGroup Name="default_host_server1_dev4-blockchainNode02_Cluster_URIs">
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/HYPCEWeb/*"/>
+   </UriGroup>
+   <Route ServerCluster="server1_dev4-blockchainNode02_Cluster" UriGroup="default_host_server1_dev4-blockchainNode02_Cluster_URIs" VirtualHostGroup="default_host"/>
+   <ServerCluster CloneSeparatorChange="false" GetDWLMTable="false" IgnoreAffinityRequests="true" LoadBalance="Round Robin" Name="server1_VTBUAT01-PCNode01_Cluster" PostBufferSize="64" PostSizeLimit="-1" RemoveSpecialHeaders="true" RetryInterval="60">
+      <Server ConnectTimeout="0" ExtendedHandshake="false" MaxConnections="-1" Name="VTBUAT01-PCNode01_server1" ServerIOTimeout="0" WaitForContinue="false">
+         <Transport Hostname="VTBUAT01-PC" Port="9080" Protocol="http"/>
+		 <!--
+         <Transport Hostname="dev4-blockchain" Port="9444" Protocol="https">
+            <Property Name="keyring" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.kdb"/>
+            <Property Name="stashfile" Value="C:\IBM\WebSphere\Plugins\config\webserver1\plugin-key.sth"/>
+         </Transport>
+		 -->
+      </Server>
+   </ServerCluster>
+   <UriGroup Name="default_host_server1_VTBUAT01-PCNode01_Cluster_URIs">
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/EximBillWebDEV1/*"/>
+   </UriGroup>
+   <Route ServerCluster="server1_VTBUAT01-PCNode01_Cluster" UriGroup="default_host_server1_VTBUAT01-PCNode01_Cluster_URIs" VirtualHostGroup="default_host"/>
+   <ServerCluster CloneSeparatorChange="false" GetDWLMTable="false" IgnoreAffinityRequests="true" LoadBalance="Round Robin" Name="server1_BASELINE07-EENode01_Cluster" PostBufferSize="64" PostSizeLimit="-1" RemoveSpecialHeaders="true" RetryInterval="60">
+      <Server ConnectTimeout="0" ExtendedHandshake="false" MaxConnections="-1" Name="BASELINE07-EENode01_server1" ServerIOTimeout="0" WaitForContinue="false">
+         <Transport Hostname="BASELINE07-EE" Port="9081" Protocol="http"/>
+      </Server>
+   </ServerCluster>
+   <UriGroup Name="default_host_server1_BASELINE07-EENode01_Cluster_URIs">
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/SHBEEREL/*"/>
+   </UriGroup>
+   <Route ServerCluster="server1_BASELINE07-EENode01_Cluster" UriGroup="default_host_server1_BASELINE07-EENode01_Cluster_URIs" VirtualHostGroup="default_host"/>
+   <ServerCluster CloneSeparatorChange="false" GetDWLMTable="false" IgnoreAffinityRequests="true" LoadBalance="Round Robin" Name="server1_DEV4-BaselineDevNode01_Cluster" PostBufferSize="64" PostSizeLimit="-1" RemoveSpecialHeaders="true" RetryInterval="60">
+      <Server ConnectTimeout="0" ExtendedHandshake="false" MaxConnections="-1" Name="DemoBaselineNode01_server1" ServerIOTimeout="0" WaitForContinue="false">
+         <Transport Hostname="DEV4-BaselineDev" Port="9080" Protocol="http"/>
+      </Server>
+   </ServerCluster>
+   <UriGroup Name="default_host_server1_DEV4-BaselineDevNode01_Cluster_URIs">
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/SCFEximBillWebSWeb/*"/>
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/SCFEximBillWeb/*"/>
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/SCFESP/*"/>
+	  <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/SCFbirt/*"/>
+   </UriGroup>
+   <Route ServerCluster="server1_DEV4-BaselineDevNode01_Cluster" UriGroup="default_host_server1_DEV4-BaselineDevNode01_Cluster_URIs" VirtualHostGroup="default_host"/>
+   <ServerCluster CloneSeparatorChange="false" GetDWLMTable="false" IgnoreAffinityRequests="true" LoadBalance="Round Robin" Name="server1_DEV4-BaselineDevNode02_Cluster" PostBufferSize="64" PostSizeLimit="-1" RemoveSpecialHeaders="true" RetryInterval="60">
+      <Server ConnectTimeout="0" ExtendedHandshake="false" MaxConnections="-1" Name="DEV4-BaselineDevNode02_server1" ServerIOTimeout="0" WaitForContinue="false">
+         <Transport Hostname="DEV4-BaselineDev" Port="9081" Protocol="http"/>
+      </Server>
+   </ServerCluster>
+   <UriGroup Name="default_host_server1_DEV4-BaselineDevNode02_Cluster_URIs">
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/SCFCEWeb/*"/>
+	  <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/SCFBIRTWEB/*"/>
+   </UriGroup>
+   <Route ServerCluster="server1_DEV4-BaselineDevNode02_Cluster" UriGroup="default_host_server1_DEV4-BaselineDevNode02_Cluster_URIs" VirtualHostGroup="default_host"/>   
+   <ServerCluster CloneSeparatorChange="false" GetDWLMTable="false" IgnoreAffinityRequests="true" LoadBalance="Round Robin" Name="server1_2MIZUHOPOC3Node01_Cluster" PostBufferSize="64" PostSizeLimit="-1" RemoveSpecialHeaders="true" RetryInterval="60">
+      <Server ConnectTimeout="0" ExtendedHandshake="false" MaxConnections="-1" Name="DemoBaselineNode01_server1" ServerIOTimeout="0" WaitForContinue="false">
+         <Transport Hostname="2MIZUHOPOC3" Port="9080" Protocol="http"/>
+      </Server>
+   </ServerCluster>
+   <UriGroup Name="default_host_server1_2MIZUHOPOC3Node01_Cluster_URIs">
+      <Uri AffinityCookie="JSESSIONID" AffinityURLIdentifier="jsessionid" Name="/MZH2/*"/>
+   </UriGroup>
+   <Route ServerCluster="server1_2MIZUHOPOC3Node01_Cluster" UriGroup="default_host_server1_2MIZUHOPOC3Node01_Cluster_URIs" VirtualHostGroup="default_host"/>
+   <RequestMetrics armEnabled="false" newBehavior="false"
+        rmEnabled="false" traceLevel="HOPS">
+        <filters enable="false" type="URI">
+            <filterValues enable="false" value="/servlet/snoop"/>
+            <filterValues enable="false" value="/webapp/examples/HitCount"/>
+        </filters>
+        <filters enable="false" type="SOURCE_IP">
+            <filterValues enable="false" value="255.255.255.255"/>
+            <filterValues enable="false" value="254.254.254.254"/>
+        </filters>
+    </RequestMetrics>
+</Config>
