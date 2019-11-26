@@ -1,0 +1,12 @@
+FROM ubuntu:18.04
+ENV JAVA_VERSION=8u231 \
+    JAVA_BUILD_VERSION=8u231-b11
+
+# Install Java 8
+COPY jdk-8u231-linux-x64.tar.gz /opt/
+RUN tar -xzf /opt/jdk-8u231-linux-x64.tar.gz -C /opt/ && rm -f /opt/jdk-8u231-linux-x64.tar.gz && \
+    echo "export JAVA_HOME=/opt/jdk1.8.0_231/jre" >> /etc/profile && \
+    echo "export PATH=$PATH:/opt/jdk1.8.0_231/jre/bin" >> /etc/profile
+ENV JAVA_HOME=/opt/jdk1.8.0_231/jre
+ENV PATH=/opt/jdk1.8.0_231/jre/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+CMD ["bash"]
