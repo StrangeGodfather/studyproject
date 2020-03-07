@@ -19,3 +19,5 @@ a = list(range(1,11,2))
 print(a)
 b = [2**i for i in range(5)]
 print(b)
+
+
