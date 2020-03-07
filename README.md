@@ -1,3 +1,3 @@
-<<<<<<< HEAD
-Test Project
-=======
+# studyproject
+formyself
+
