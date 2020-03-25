@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: oracle12c
+  namespace: default
+subsets:
+  - addresses:
+    - ip: 10.39.200.206
+    ports:
+    - port: 1521
+      protocol: TCP

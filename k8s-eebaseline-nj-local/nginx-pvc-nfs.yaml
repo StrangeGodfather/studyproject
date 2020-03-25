@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-pvc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      tier: frontend
+    matchExpressions:
+      - {key: tier, operator: In, values: [frontend]} 
+  template:
+    metadata:
+      labels:
+        app: nginx-pvc
+        release: stable
+        env: testing
+        tier: frontend
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      volumes:
+        - name: "pv-nfs-storage"
+          persistentVolumeClaim:
+            claimName: eeclaim
+      containers:
+      - name: nginx-pvc-test
+        image: nginx
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+          - mountPath: /data/wwwroot/
+            name: "pv-nfs-storage"
+            readOnly: false
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: 250m
+          

@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sbee-baseline
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      tier: frontend
+    matchExpressions:
+      - {key: tier, operator: In, values: [frontend]} 
+  template:
+    metadata:
+      labels:
+        app: sbee-basline
+        release: beta
+        env: testing
+        tier: frontend
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      volumes:
+        - name: "pv-nfs-storage"
+          persistentVolumeClaim:
+            claimName: eeclaim
+      containers:
+      - name: sbee-baseline-web
+        image: jiatengcloud.azurecr.io/sbee-azure-aks:20200317v1
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+          - mountPath: /eelogs
+            name: "pv-nfs-storage"
+            readOnly: false
+        ports:
+        - containerPort: 9080
+        resources:
+          requests:
+            cpu: 500m
+          limits:
+            cpu: 1000m
+          
